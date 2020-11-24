@@ -1,7 +1,7 @@
 
 ![](https://github.com/AshaNarayana/amplify-react-app/blob/main/CoverPage.PNG)
 
-# This is amplify react app
+# This is amplify react app uses graphql, appsync, dynamodb, aws cognito services
 
 # Pre-requisites
 aws account
