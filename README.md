@@ -1,8 +1,7 @@
-# This is amplify react app
-
-# Getting Started with Create React App
 
 ![](https://github.com/AshaNarayana/amplify-react-app/blob/main/CoverPage.PNG)
+
+# This is amplify react app
 
 # Pre-requisites
 aws account
