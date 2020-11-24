@@ -9,6 +9,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import awsconfig from "./aws-exports";
 import {listSongs} from './graphql/queries'
+import { updateSong } from "./graphql/mutations";
 Amplify.configure(awsconfig);
 
 
@@ -33,6 +34,22 @@ console.log("error on fetching songs", error)
 }
 
   }
+
+  const addLike = async(index)=>{
+    try{
+      const song = songs[index]
+      song.like = song.like + 1
+      delete song.createdAt
+      delete song.updatedAt
+      const songData = await API.graphql(graphqlOperation(updateSong, {input: song}))
+      const songList = [...songs]
+      songList[index]=songData.data.updateSong;
+      setSongs(songList)
+
+    }catch(error){ console.log("error with adding likes", error)}
+
+
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -40,9 +57,9 @@ console.log("error on fetching songs", error)
         <h2>My app content goes here</h2>
       </header>
       <div className="songList">
-        {songs.map((song)=>{
+        {songs.map((song,idx)=>{
           return (
-            <Paper variant="outlined" elevation={2}>
+            <Paper variant="outlined" elevation={2} key={`song${idx}`}>
 <div className="songCard">
 <IconButton aria-label="play">
   <PlayArrowIcon/>
@@ -52,7 +69,7 @@ console.log("error on fetching songs", error)
           <div className="songOwner">{song.owner}</div>
 </div>
 <div>
-<IconButton aria-label="like">
+<IconButton aria-label="like" onClick={()=> addLike(idx)}>
   <FavoriteIcon/>
 </IconButton>
 {song.like}
